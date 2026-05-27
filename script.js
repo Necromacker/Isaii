@@ -79,8 +79,9 @@ function updateOpacity() {
     root.style.setProperty('--text', rgbStr(text));
     root.style.setProperty('--card-bg', rgbStr(cardBg));
     
-    // Innovations card theme
-    root.style.setProperty('--card-bg-theme', rgbStr(bg));
+    // Innovations card theme — white in light, dark in dark
+    var cardBgTheme = lerpColor([255, 255, 255], [28, 28, 28], progress);
+    root.style.setProperty('--card-bg-theme', rgbStr(cardBgTheme));
     root.style.setProperty('--shadow-dark', rgbStr(shadowDark));
     root.style.setProperty('--shadow-light', rgbStr(shadowLight));
 
@@ -96,112 +97,60 @@ var myDraggable = Draggable.create("#dragme", {
     onThrowUpdate: updateOpacity
 });
 
-// ── Marquee decode animation (position-based) ──
+// ── Marquee word-hover decode animation ──
 var decodeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*!?';
 
-function scrambleString(text) {
-    var result = '';
-    for (var i = 0; i < text.length; i++) {
-        if (text[i] === ' ') result += ' ';
-        else result += decodeChars[Math.floor(Math.random() * decodeChars.length)];
+function scrambleWord(word) {
+    var out = '';
+    for (var i = 0; i < word.length; i++) {
+        out += decodeChars[Math.floor(Math.random() * decodeChars.length)];
     }
-    return result;
+    return out;
 }
 
-// Decode: scrambled → real text, reveals left-to-right
-function decodeText(element, cb) {
-    if (element._decodeInterval) clearInterval(element._decodeInterval);
-    var finalText = element.getAttribute('data-text');
-    var len = finalText.length;
+function hoverDecodeWord(el) {
+    var word = el.getAttribute('data-word');
+    var len = word.length;
     var step = 0;
-    element._decodeInterval = setInterval(function () {
-        var out = '';
-        for (var i = 0; i < len; i++) {
-            if (finalText[i] === ' ') out += ' ';
-            else if (i < step) out += finalText[i];
-            else out += decodeChars[Math.floor(Math.random() * decodeChars.length)];
+    if (el._hoverInterval) clearInterval(el._hoverInterval);
+
+    // Phase 1: scramble fully first (quick)
+    var scramblePhase = 0;
+    var totalScrambles = 6;
+    el._hoverInterval = setInterval(function () {
+        el.textContent = scrambleWord(word);
+        scramblePhase++;
+        if (scramblePhase >= totalScrambles) {
+            clearInterval(el._hoverInterval);
+            // Phase 2: decode left to right
+            el._hoverInterval = setInterval(function () {
+                var out = '';
+                for (var i = 0; i < len; i++) {
+                    if (i < step) out += word[i];
+                    else out += decodeChars[Math.floor(Math.random() * decodeChars.length)];
+                }
+                el.textContent = out;
+                step += 1;
+                if (step > len) {
+                    clearInterval(el._hoverInterval);
+                    el._hoverInterval = null;
+                    el.textContent = word;
+                }
+            }, 30);
         }
-        element.textContent = out;
-        step += 2;
-        if (step > len) {
-            clearInterval(element._decodeInterval);
-            element._decodeInterval = null;
-            element.textContent = finalText;
-            if (cb) cb();
-        }
-    }, 25);
+    }, 40);
 }
 
-// Encode: real text → scrambled, scrambles left-to-right
-function encodeText(element, cb) {
-    if (element._decodeInterval) clearInterval(element._decodeInterval);
-    var finalText = element.getAttribute('data-text');
-    var len = finalText.length;
-    var step = 0;
-    element._decodeInterval = setInterval(function () {
-        var out = '';
-        for (var i = 0; i < len; i++) {
-            if (finalText[i] === ' ') out += ' ';
-            else if (i < step) out += decodeChars[Math.floor(Math.random() * decodeChars.length)];
-            else out += finalText[i];
-        }
-        element.textContent = out;
-        step += 2;
-        if (step > len) {
-            clearInterval(element._decodeInterval);
-            element._decodeInterval = null;
-            element.textContent = scrambleString(finalText);
-            if (cb) cb();
-        }
-    }, 25);
-}
-
-// Setup: attach state directly to each element
-(function initMarquee() {
-    var items = document.querySelectorAll('.marquee-item');
-    items.forEach(function (item) {
-        item._mState = 'scrambled';
-        item.textContent = scrambleString(item.getAttribute('data-text'));
-    });
-
-    var wrapper = document.querySelector('.marquee-wrapper');
-
-    function tick() {
-        var wRect = wrapper.getBoundingClientRect();
-        var wLeft = wRect.left;
-        var wRight = wRect.right;
-        var wWidth = wRect.width;
-
-        items.forEach(function (item) {
-            var r = item.getBoundingClientRect();
-            var state = item._mState;
-            var isInside = r.right > wLeft && r.left < wRight;
-
-            if (state === 'scrambled' && isInside && r.left < wRight) {
-                // Entered the visible area — decode it
-                item._mState = 'decoding';
-                decodeText(item, function () {
-                    item._mState = 'decoded';
-                });
-            }
-
-            if (state === 'decoded' && r.right < wLeft + wWidth * 0.3 && r.right > wLeft - 100) {
-                // Approaching left edge — encode it back
-                item._mState = 'encoding';
-                encodeText(item, function () {
-                    item._mState = 'scrambled';
-                });
-            }
-
-            // Fully off-screen to the left or jumped back to right — reset
-            if ((r.right < wLeft - 100 || r.left > wRight + 100) && state !== 'scrambled' && !item._decodeInterval) {
-                item.textContent = scrambleString(item.getAttribute('data-text'));
-                item._mState = 'scrambled';
-            }
+// Attach hover to every marquee word
+(function initMarqueeWords() {
+    var words = document.querySelectorAll('.marquee-word');
+    words.forEach(function (el) {
+        el.addEventListener('mouseenter', function () {
+            hoverDecodeWord(el);
         });
-
-        requestAnimationFrame(tick);
-    }
-
-    requestAnimationFrame(tick);
+        el.addEventListener('mouseleave', function () {
+            // If still animating, let it finish naturally
+            // If already done, do nothing
+        });
+    });
 })();
