@@ -137,7 +137,7 @@ body {
 .nav-link.active::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -7px;
     left: 50%;
     transform: translateX(-50%);
     width: 5px;
