@@ -500,7 +500,8 @@ body {
     text-align: left;
     display: flex;
     flex-direction: column;
-    transition: background 0.05s linear, box-shadow 0.05s linear, color 0.05s linear;
+    border: 1px solid var(--card-border, rgba(128, 128, 128, 0.12));
+    transition: background 0.05s linear, box-shadow 0.05s linear, color 0.05s linear, border 0.05s linear;
 }
 
 .card-icon {
@@ -513,7 +514,7 @@ body {
 .card h3 {
     font-size: 1.45rem;
     margin-bottom: 12px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: -0.02em;
 }
 
@@ -578,6 +579,7 @@ body {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
+    align-items: stretch;
 }
 
 .bento-col {
@@ -609,7 +611,7 @@ body {
 
 .bento-card h3 {
     font-size: 1.45rem;
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 12px;
     color: var(--text);
     letter-spacing: -0.02em;
@@ -629,7 +631,7 @@ body {
 }
 
 .design-card {
-    min-height: 220px;
+    flex: 1;
 }
 
 .outstaffing-card {
@@ -638,7 +640,7 @@ body {
 }
 
 .ai-card {
-    min-height: 400px;
+    flex: 1;
     background: var(--ai-bg, #e0f2fe) !important;
 }
 
@@ -648,7 +650,7 @@ body {
 }
 
 .mobile-card {
-    min-height: 220px;
+    flex: 1;
 }
 
 /* Tag style */
@@ -703,8 +705,16 @@ body {
 }
 
 .saas-visual {
-    background: linear-gradient(135deg, #6366f1, #a855f7);
-    padding: 12px;
+    background: transparent;
+    padding: 0;
+}
+
+.saas-img,
+.bento-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
 }
 
 .dashboard-mock {
@@ -775,6 +785,7 @@ body {
 
 .ai-visual {
     background: transparent;
+    padding: 0;
 }
 
 .laptop-mock {
@@ -810,7 +821,7 @@ body {
 
 .web-visual {
     background: transparent;
-    padding: 12px;
+    padding: 0;
 }
 
 .templates-grid {

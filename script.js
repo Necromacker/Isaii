@@ -36,11 +36,11 @@ var lightShadowDark = [208, 208, 208]; // Dark shadow for f5f5f5
 var lightShadowLight = [255, 255, 255]; // Light shadow for f5f5f5
 
 // Dark theme colors
-var darkBg = [0, 0, 0];    // #111111
-var darkText = [230, 230, 230]; // #e6e6e6
-var darkCardBg = [30, 30, 30];    // #1e1e1e
-var darkShadowDark = [0, 0, 0];
-var darkShadowLight = [25, 25, 25];
+var darkBg = [18, 18, 22];    // #121216 - Rich Slate Dark Background
+var darkText = [230, 230, 240]; // #e6e6f0
+var darkCardBg = [28, 28, 34];    // #1c1c22 - Cohesive Dark Card
+var darkShadowDark = [5, 5, 8];
+var darkShadowLight = [28, 28, 34];
 
 function updateOpacity() {
     var maxDrag = this.maxX;
@@ -80,7 +80,7 @@ function updateOpacity() {
     root.style.setProperty('--card-bg', rgbStr(cardBg));
     
     // Innovations card theme — white in light, dark in dark
-    var cardBgTheme = lerpColor([255, 255, 255], [28, 28, 28], progress);
+    var cardBgTheme = lerpColor([255, 255, 255], [28, 28, 34], progress);
     root.style.setProperty('--card-bg-theme', rgbStr(cardBgTheme));
     root.style.setProperty('--shadow-dark', rgbStr(shadowDark));
     root.style.setProperty('--shadow-light', rgbStr(shadowLight));
@@ -94,9 +94,10 @@ function updateOpacity() {
     root.style.setProperty('--ai-bg', rgbStr(aiBg));
     root.style.setProperty('--web-bg', rgbStr(webBg));
 
-    // Card border: invisible in light, subtle in dark
-    var borderAlpha = progress * 0.15;
-    root.style.setProperty('--card-border', 'rgba(255, 255, 255, ' + borderAlpha + ')');
+    // Card border: highly visible subtle dark grey in light, subtle white in dark
+    var borderAlpha = 0.22 + (0.15 - 0.22) * progress;
+    var borderColorVal = Math.round(100 + (255 - 100) * progress);
+    root.style.setProperty('--card-border', 'rgba(' + borderColorVal + ',' + borderColorVal + ',' + borderColorVal + ', ' + borderAlpha + ')');
 }
 
 var myDraggable = Draggable.create("#dragme", {
