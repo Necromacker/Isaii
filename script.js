@@ -85,6 +85,15 @@ function updateOpacity() {
     root.style.setProperty('--shadow-dark', rgbStr(shadowDark));
     root.style.setProperty('--shadow-light', rgbStr(shadowLight));
 
+    // Bento card backgrounds (tinted)
+    var outstaffingBg = lerpColor([243, 232, 255], [30, 27, 75], progress);
+    var aiBg = lerpColor([224, 242, 254], [7, 89, 133], progress);
+    var webBg = lerpColor([254, 243, 199], [120, 53, 4], progress);
+
+    root.style.setProperty('--outstaffing-bg', rgbStr(outstaffingBg));
+    root.style.setProperty('--ai-bg', rgbStr(aiBg));
+    root.style.setProperty('--web-bg', rgbStr(webBg));
+
     // Card border: invisible in light, subtle in dark
     var borderAlpha = progress * 0.15;
     root.style.setProperty('--card-border', 'rgba(255, 255, 255, ' + borderAlpha + ')');
@@ -154,3 +163,13 @@ function hoverDecodeWord(el) {
         });
     });
 })();
+
+// ── Scroll Listener for Navbar transformation ──
+window.addEventListener('scroll', function () {
+    var navbar = document.getElementById('navbar');
+    if (window.scrollY >= 100) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});
