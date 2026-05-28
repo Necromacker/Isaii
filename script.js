@@ -199,10 +199,78 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             toggleActions: "play none none reverse"
         },
         opacity: 0,
-
         duration: 0.8,
         stagger: 0.2,
         ease: "back.out(1.5)",
         delay: 0.3
     });
+
+    // ── Products Section Animation ──
+    gsap.from(".section-title", {
+        scrollTrigger: {
+            trigger: "#products-section",
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out"
+    });
+
+    gsap.from(".product-card", {
+        scrollTrigger: {
+            trigger: ".products-grid",
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power3.out"
+    });
+
+    // ── FAQ Section Animation ──
+    gsap.from(".faq-item", {
+        scrollTrigger: {
+            trigger: ".faq-accordion",
+            start: "top 85%",
+            toggleActions: "play none none reverse"
+        },
+        y: 30,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.out"
+    });
 }
+
+// ── FAQ Accordion Toggle ──
+(function initFaqAccordion() {
+    var faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(function (item) {
+        var question = item.querySelector('.faq-question');
+        question.addEventListener('click', function () {
+            var answer = item.querySelector('.faq-answer');
+            var isActive = item.classList.contains('active');
+
+            // Close all other items
+            faqItems.forEach(function (other) {
+                if (other !== item) {
+                    other.classList.remove('active');
+                    other.querySelector('.faq-answer').style.maxHeight = null;
+                }
+            });
+
+            // Toggle current item
+            if (isActive) {
+                item.classList.remove('active');
+                answer.style.maxHeight = null;
+            } else {
+                item.classList.add('active');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
+})();
