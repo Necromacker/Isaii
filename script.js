@@ -115,6 +115,10 @@ function updateOpacity() {
     var faqBgB = Math.round(255 + (60 - 255) * progress);
     var faqBgA = 0.35 + (0.3 - 0.35) * progress;
     root.style.setProperty('--faq-item-bg', 'rgba(' + faqBgR + ',' + faqBgG + ',' + faqBgB + ',' + faqBgA + ')');
+
+    // SVGs inside themed cards — dark in light mode, white in dark mode
+    var cardSvgColor = lerpColor([0, 0, 0], [255, 255, 255], progress);
+    root.style.setProperty('--card-svg-color', rgbStr(cardSvgColor));
 }
 
 var myDraggable = Draggable.create("#dragme", {
