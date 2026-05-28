@@ -78,7 +78,8 @@ function updateOpacity() {
     root.style.setProperty('--section-padding-bg', rgbStr(bg));
     root.style.setProperty('--text', rgbStr(text));
     root.style.setProperty('--card-bg', rgbStr(cardBg));
-    
+    root.style.setProperty('--logo-filter', 'invert(' + progress + ')');
+
     // Innovations card theme — white in light, dark in dark
     var cardBgTheme = lerpColor([255, 255, 255], [28, 28, 34], progress);
     root.style.setProperty('--card-bg-theme', rgbStr(cardBgTheme));
@@ -174,3 +175,34 @@ window.addEventListener('scroll', function () {
         navbar.classList.remove('scrolled');
     }
 });
+
+// ── Statement Section Animation ──
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from(".statement-text", {
+        scrollTrigger: {
+            trigger: "#statement-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+
+    gsap.from(".statement-sticker", {
+        scrollTrigger: {
+            trigger: "#statement-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        },
+        opacity: 0,
+
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "back.out(1.5)",
+        delay: 0.3
+    });
+}

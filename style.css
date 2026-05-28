@@ -873,3 +873,108 @@ body {
         flex-direction: column;
     }
 }
+
+/* ── Theme Logo Filter ── */
+:root {
+    --logo-filter: invert(0);
+}
+
+.nav-logo {
+    filter: var(--logo-filter, invert(0));
+    transition: filter 0.1s ease, height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#navbar.scrolled .nav-logo {
+    filter: none !important;
+}
+
+/* ── Brand Statement Section ── */
+#statement-section {
+    position: relative;
+    padding: 80px 48px;
+    background-color: var(--bg);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.05s linear;
+}
+
+.statement-container {
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.statement-content {
+    position: relative;
+    z-index: 10;
+    max-width: 950px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.statement-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    transition: color 0.05s linear;
+}
+
+.statement-sticker {
+    display: inline-block;
+    padding: 6px 20px;
+    background-color: var(--nav-bg);
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    border-radius: 40px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    color: var(--text);
+    backdrop-filter: blur(8px);
+    margin: 0 4px;
+    vertical-align: baseline;
+    line-height: 1.2;
+    padding-bottom: 8px;
+    scale: 0.9;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s ease, color 0.3s ease;
+}
+
+.statement-sticker:hover {
+    transform: scale(1.05) translateY(-4px) rotate(-2deg);
+    background-color: var(--text);
+    color: var(--bg);
+}
+
+
+
+/* Responsive design */
+@media (max-width: 992px) {
+    .statement-text {
+        font-size: 2.5rem;
+    }
+
+    .statement-sticker {
+        padding: 4px 20px;
+        font-size: 2.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    #statement-section {
+        padding: 100px 24px;
+    }
+
+    .statement-text {
+        font-size: 1.85rem;
+        line-height: 1.4;
+    }
+
+    .statement-sticker {
+        padding: 4px 16px;
+        font-size: 1.5rem;
+    }
+}
