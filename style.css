@@ -900,6 +900,17 @@ body {
     transition: background-color 0.05s linear;
 }
 
+#excellence-section {
+    position: relative;
+    padding: 80px 48px;
+    background-color: var(--card-bg-theme, #ffffff);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.05s linear;
+}
+
 .statement-container {
     position: relative;
     max-width: 1200px;
@@ -935,7 +946,7 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     color: var(--text);
     backdrop-filter: blur(8px);
-    margin: 0 4px;
+
     vertical-align: baseline;
     line-height: 1.2;
     padding-bottom: 8px;
@@ -964,7 +975,9 @@ body {
 }
 
 @media (max-width: 576px) {
-    #statement-section {
+
+    #statement-section,
+    #excellence-section {
         padding: 100px 24px;
     }
 
@@ -977,4 +990,186 @@ body {
         padding: 4px 16px;
         font-size: 1.5rem;
     }
+}
+
+/* ── Products Grid Section ── */
+#products-section {
+    padding: 80px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    justify-items: center;
+}
+
+.card-time-cloud {
+  position: relative;
+  border-radius: 1em;
+  width: 17.5em;
+  height: 8em;
+  z-index: 2;
+  border: solid 0.15em var(--color1);
+  transition: 0.5s all ease-in-out;
+  box-shadow: 0em 0em rgb(0, 0, 0, 0.25);
+  overflow: hidden;
+  --color1: rgb(237, 120, 42);
+  --skycolor: var(--card-bg-theme, #ffffff);
+  background-color: var(--skycolor);
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  .card-time-cloud {
+    font-size: 14px;
+  }
+}
+
+.card-time-cloud-front {
+  width: 20em;
+  height: 12.5em;
+  background: var(--nav-bg, rgb(228, 228, 228));
+  border-radius: 1em;
+  position: absolute;
+  z-index: 2;
+  top: 95%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.5s all ease-in-out;
+}
+
+.card-time-cloud-back {
+  width: 20em;
+  height: 17.5em;
+  background: var(--skycolor);
+  border-radius: 1em;
+  position: absolute;
+  z-index: 1;
+  top: 57.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 0.5s all ease-in-out;
+}
+
+.card-time-cloud:hover {
+  margin-bottom: 1em;
+  box-shadow: 0em 1em rgb(237, 120, 42, 0.5);
+}
+
+.card-time-cloud:hover .card-time-cloud-front {
+  top: 105%;
+}
+
+.card-time-cloud-back svg {
+  position: absolute;
+  z-index: 1;
+  top: -16.45em;
+  left: -7.5em;
+  width: 25em;
+  height: auto;
+  opacity: 100%;
+  animation: rotate-cloud 15s linear infinite;
+}
+
+.card-time-cloud-back svg:nth-child(2) {
+  animation: rotate-cloud 15s linear infinite 1s;
+  opacity: 50%;
+}
+
+@keyframes rotate-cloud {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.card-time-cloud-day {
+  color: var(--color1);
+  position: absolute;
+  z-index: 3;
+  top: 1.25em;
+  left: 0.5em;
+  font-size: 1.4em;
+  font-weight: bold;
+  transition: 0.5s all ease-in-out;
+}
+
+.card-time-cloud-day-number {
+  color: var(--color1);
+  position: absolute;
+  z-index: 3;
+  top: 3.5em;
+  left: 0.75em;
+  font-size: 1em;
+  transition: 0.5s all ease-in-out;
+  font-weight: 500;
+  width: 75%;
+  line-height: 1.3;
+}
+
+.card-time-cloud-hour {
+  color: var(--color1);
+  position: absolute;
+  z-index: 3;
+  top: 1.25em;
+  right: 0.5em;
+  font-size: 1.5em;
+  font-weight: bold;
+  transition: 0.5s all ease-in-out;
+  display: none; /* Hide hour */
+}
+
+.card-time-cloud:hover {
+  height: 15em;
+}
+
+.card-time-cloud:hover .card-time-cloud-day {
+  top: 2.25em;
+}
+
+.card-time-cloud:hover .card-time-cloud-day-number {
+  top: 4.5em;
+}
+
+.card-time-cloud:hover .card-time-cloud-hour {
+  top: 1em;
+  font-size: 3em;
+}
+
+.card-time-cloud-icon svg {
+  position: absolute;
+  z-index: 4;
+  top: 4em;
+  right: 0.6em;
+  transform: rotate(0deg);
+  width: 1.5em;
+  height: auto;
+  transition: 0.5s all ease-in-out;
+}
+
+.card-time-cloud:hover .card-time-cloud-icon svg {
+  top: 7.25em;
+  right: -1.75em;
+  width: 7.5em;
+  height: auto;
+  transform: rotate(-35deg);
+}
+.card-time-cloud:active {
+  transition: 0.25s all ease-in-out;
+  transform: scale(0.95);
+}
+
+.card-time-cloud:active .card-time-cloud-front {
+  transition: 0.25s all ease-in-out;
+  top: 120%;
+  background-color: var(--color1);
+}
+
+.card-time-cloud:active .card-time-cloud-icon svg {
+  transition: 0.25s all ease-in-out;
+  top: 8em;
+  transform: rotate(-25deg);
+  stroke: #4a4b55;
 }

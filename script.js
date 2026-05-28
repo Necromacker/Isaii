@@ -180,7 +180,7 @@ window.addEventListener('scroll', function () {
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
-    gsap.from(".statement-text", {
+    gsap.from(".statement-text:not(.excellence-text)", {
         scrollTrigger: {
             trigger: "#statement-section",
             start: "top 80%",
@@ -192,7 +192,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         ease: "power3.out"
     });
 
-    gsap.from(".statement-sticker", {
+    gsap.from(".statement-sticker:not(.excellence-sticker)", {
         scrollTrigger: {
             trigger: "#statement-section",
             start: "top 80%",
@@ -200,6 +200,31 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         },
         opacity: 0,
 
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "back.out(1.5)",
+        delay: 0.3
+    });
+
+    gsap.from(".excellence-text", {
+        scrollTrigger: {
+            trigger: "#excellence-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        },
+        y: 50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+    });
+
+    gsap.from(".excellence-sticker", {
+        scrollTrigger: {
+            trigger: "#excellence-section",
+            start: "top 80%",
+            toggleActions: "play none none reverse"
+        },
+        opacity: 0,
         duration: 0.8,
         stagger: 0.2,
         ease: "back.out(1.5)",
