@@ -902,7 +902,7 @@ body {
 
 #excellence-section {
     position: relative;
-    padding: 80px 48px;
+    padding: 60px 40px;
     background-color: var(--card-bg-theme, #ffffff);
     overflow: hidden;
     display: flex;
@@ -994,14 +994,15 @@ body {
 
 /* ── Products Grid Section ── */
 #products-section {
-    padding: 20px 48px 80px 48px; /* Reduced padding top */
-    max-width: 1200px;
-    margin: 0 auto;
+    background-color: var(--card-bg-theme, #ffffff);
+    padding: 0rem 8rem;
+    padding-bottom: 5rem;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 32px;
     justify-items: center;
     align-items: start;
+    transition: background-color 0.05s linear;
 }
 
 .card-time-cloud {
@@ -1012,12 +1013,13 @@ body {
     z-index: 2;
     border: solid 0.15em var(--color1);
     transition: 0.5s all ease-in-out;
-    box-shadow: 0em 0em rgb(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px var(--card-shadow, rgba(0, 0, 0, 0.08));
     overflow: hidden;
     --color1: var(--text);
     --skycolor: var(--card-bg-theme, #ffffff);
     background-color: var(--skycolor);
-    background-image: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04)); /* Slightly lighter */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.04));
+    /* Slightly lighter */
     font-size: 16px;
 }
 
@@ -1032,7 +1034,8 @@ body {
     top: 0.5em;
     left: 0.5em;
     width: calc(100% - 1em);
-    height: 6.7em; /* Accounts for 0.3em border to keep 0.5em bottom margin */
+    height: 6.7em;
+    /* Accounts for 0.3em border to keep 0.5em bottom margin */
     object-fit: cover;
     z-index: 6;
     transition: 0.5s all ease-in-out;
@@ -1066,7 +1069,7 @@ body {
 }
 
 .card-time-cloud:hover {
-    box-shadow: 0em 1em rgb(237, 120, 42, 0.5);
+    box-shadow: 0 8px 32px var(--card-shadow-hover, rgba(0, 0, 0, 0.15));
     height: 12.5em;
 }
 
@@ -1165,4 +1168,144 @@ body {
     top: 12em;
     transform: rotate(-25deg);
     stroke: var(--color1);
+}
+
+/* ── FAQ Section ── */
+#faq-section {
+    padding: 80px 48px;
+    background-color: var(--bg);
+    transition: background-color 0.05s linear;
+}
+
+.faq-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--card-bg-theme, #ffffff);
+    border-radius: 24px;
+    border: 1px solid var(--card-border, rgba(128, 128, 128, 0.2));
+    padding: 48px 40px;
+    box-shadow: 0 8px 40px var(--card-shadow, rgba(0, 0, 0, 0.08));
+    transition: background-color 0.05s linear, box-shadow 0.3s ease;
+}
+
+.faq-header {
+    margin-bottom: 36px;
+}
+
+.faq-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text);
+    margin: 0 0 8px 0;
+    transition: color 0.05s linear;
+}
+
+.faq-header p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--text);
+    opacity: 0.6;
+    margin: 0;
+    line-height: 1.6;
+    transition: color 0.05s linear;
+}
+
+.faq-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.faq-item {
+    background-color: var(--faq-item-bg, rgba(200, 180, 255, 0.25));
+    border-radius: 14px;
+    border: 1px solid var(--card-border, rgba(128, 128, 128, 0.15));
+    overflow: hidden;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.faq-item:hover {
+    box-shadow: 0 4px 16px var(--card-shadow, rgba(0, 0, 0, 0.06));
+}
+
+.faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    cursor: default;
+    user-select: none;
+    gap: 16px;
+}
+
+.faq-question h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    transition: color 0.05s linear;
+}
+
+.faq-question .faq-chevron {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: var(--text);
+}
+
+/* Hover-based open */
+.faq-item:hover .faq-chevron {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), padding 0.35s ease;
+    padding: 0 24px;
+}
+
+.faq-item:hover .faq-answer {
+    max-height: 200px;
+    padding: 0 24px 20px 24px;
+}
+
+.faq-answer p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: var(--text);
+    opacity: 0.7;
+    line-height: 1.7;
+    margin: 0;
+    transition: color 0.05s linear;
+}
+
+@media (max-width: 768px) {
+    #faq-section {
+        padding: 60px 20px;
+    }
+
+    .faq-container {
+        padding: 32px 20px;
+        border-radius: 18px;
+    }
+
+    .faq-header h2 {
+        font-size: 1.6rem;
+    }
+
+    .faq-list {
+        grid-template-columns: 1fr;
+    }
+
+    .faq-question {
+        padding: 16px 18px;
+    }
+
+    .faq-question h3 {
+        font-size: 0.95rem;
+    }
 }

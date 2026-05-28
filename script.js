@@ -99,6 +99,22 @@ function updateOpacity() {
     var borderAlpha = 0.22 + (0.15 - 0.22) * progress;
     var borderColorVal = Math.round(100 + (255 - 100) * progress);
     root.style.setProperty('--card-border', 'rgba(' + borderColorVal + ',' + borderColorVal + ',' + borderColorVal + ', ' + borderAlpha + ')');
+
+    // Card shadows — light grey in light mode, subtle bright in dark mode
+    var shadowAlpha = 0.08 + (0.25 - 0.08) * progress;
+    var shadowHoverAlpha = 0.15 + (0.35 - 0.15) * progress;
+    var shadowR = Math.round(0 + (100 - 0) * progress);
+    var shadowG = Math.round(0 + (100 - 0) * progress);
+    var shadowB = Math.round(0 + (120 - 0) * progress);
+    root.style.setProperty('--card-shadow', 'rgba(' + shadowR + ',' + shadowG + ',' + shadowB + ',' + shadowAlpha + ')');
+    root.style.setProperty('--card-shadow-hover', 'rgba(' + shadowR + ',' + shadowG + ',' + shadowB + ',' + shadowHoverAlpha + ')');
+
+    // FAQ item tinted background
+    var faqBgR = Math.round(230 + (45 - 230) * progress);
+    var faqBgG = Math.round(220 + (40 - 220) * progress);
+    var faqBgB = Math.round(255 + (60 - 255) * progress);
+    var faqBgA = 0.35 + (0.3 - 0.35) * progress;
+    root.style.setProperty('--faq-item-bg', 'rgba(' + faqBgR + ',' + faqBgG + ',' + faqBgB + ',' + faqBgA + ')');
 }
 
 var myDraggable = Draggable.create("#dragme", {
